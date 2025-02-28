@@ -30,16 +30,27 @@ public class TodoService {
 	}
 
 	public void deleteTaskById(Long id) {
-		// TODO Auto-generated method stub
 		todoRepo.deleteById(id);
 	}
 
 	public void toggleTaskById(Long id) {
-		// TODO Auto-generated method stub
 		TodoApp tt=todoRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid Task"));
 		
 		tt.setCompleted(!tt.isCompleted());
 		todoRepo.save(tt);
+		
+		
+	}
+
+	public void updateTaskById(Long id,String title) {
+		
+		TodoApp todo=todoRepo.findById(id).orElseThrow(() -> new RuntimeException("task not found"));
+		if(!title.isBlank()) {
+			todo.setTask(title);
+		}
+		todoRepo.save(todo);
+	
+	
 		
 		
 	}

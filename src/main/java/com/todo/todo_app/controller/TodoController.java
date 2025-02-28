@@ -17,28 +17,37 @@ import com.todo.todo_app.service.TodoService;
 public class TodoController {
 	@Autowired
 	private TodoService todoService;
+
 	@GetMapping
 	public String getTasks(Model model) {
 		List<TodoApp>tasks=todoService.getAllTasks();
 		model.addAttribute("tasks",tasks);	
 		return "tasks";
-		
+
 	}
+
 	@PostMapping
 	public String addTask(@RequestParam String title) {
 		todoService.createTask(title);
 		return "redirect:/";
 	}
+
 	@GetMapping("/delete/{id}")
 	public String deleteById(@PathVariable Long id) {
 		todoService.deleteTaskById(id);
 		return "redirect:/";
-		
+
 	}
-	
+
 	@GetMapping("/toggle/{id}")
 	public String toggleById(@PathVariable Long id) {
 		todoService.toggleTaskById(id);
+		return "redirect:/";
+
+	}
+	@GetMapping("/update/{id}")
+	public String update(@PathVariable Long id,@RequestParam String title) {
+		todoService.updateTaskById(id,title);
 		return "redirect:/";
 		
 	}
